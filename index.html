@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Colortime</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigatie bovenaan -->
+  <header class="topbar">
+    <div class="logo">
+      <img src="images/logo@2x.jpg" alt="Colortime logo">
+    </div>
+    <nav class="topnav">
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="werken.html">Onze werken</a></li>
+        <li><a href="over-ons.html">Over ons</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero-sectie met foto en call to action -->
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <h1>Colortime</h1>
+      <p>Vakmanschap in verf en behangwerken — vanuit Aalst</p>
+     
+    </div>
+  </div>
+
+  <!-- Diensten / Wat we doen -->
+  <section class="services">
+    <div class="services__left">
+      <h2>Wat we voor u doen</h2>
+      <p class="services__locatie">Gevestigd in <strong>Aalst</strong> — actief in de regio en omstreken.</p>
+      <p>
+        Bij <strong>Colortime</strong> focussen we op schilder- en behangwerken met een piekfijne afwerking.
+        We werken met kwaliteitsproducten en zorgen voor een nette, duurzame oplevering.
+      </p>
+      <a class="btn-cta" href="mailto:colortimevdm@gmail.com?subject=Offerte">Vraag offerte aan</a>
+
+
+    </div>
+
+    <div class="services__right">
+      <ul>
+        <li>Binnenschilderwerken (muren, plafonds, deuren, ramen)</li>
+        <li>Buitenschilderwerken (gevel, houtwerk)</li>
+        <li>Behangwerken & renovatievlies</li>
+        <li>Voorbereiding: schuren, plamuren, primer</li>
+        <li>Houtwerk lakken & vernissen</li>
+        <li>Afkitten & kleine bijwerkingen</li>
+      </ul>
+    </div>
+  </section>
+<!-- ===== Recent werk in beeld (CSS-only carrousel) ===== -->
+<section class="showcase">
+  <h2>Enkele realisaties</h2>
+
+  <div class="sc-viewport">
+    <ul class="sc-track">
+      <!-- Geef elke slide een uniek id -->
+      <li id="shot1" class="sc-item"><img src="images/project1.jpg" alt="Project 1"></li>
+      <li id="shot2" class="sc-item"><img src="images/project2.jpg" alt="Project 2"></li>
+      <li id="shot3" class="sc-item"><img src="images/zetel.jpeg" alt="Project 3"></li>
+      <li id="shot4" class="sc-item"><img src="images/buiten.jpg" alt="Project 4"></li>
+      <li id="shot5" class="sc-item"><img src="images/coloblikje.jpg" alt="Project 5"></li>
+      <li id="shot6" class="sc-item"><img src="images/onsHuis.jpg" alt="Project 6"></li>
+      <li id="shot7" class="sc-item"><img src="images/badje.jpg" alt="Project 7"></li>
+      <li id="shot8" class="sc-item"><img src="images/schuurmachin.jpg" alt="Project 8"></li>
+    </ul>
+  </div>
+
+  <!-- Dots: springen naar het corresponderende id -->
+  <nav class="sc-dots">
+    <a href="#shot1" aria-label="Naar foto 1"></a>
+    <a href="#shot2" aria-label="Naar foto 2"></a>
+    <a href="#shot3" aria-label="Naar foto 3"></a>
+    <a href="#shot4" aria-label="Naar foto 4"></a>
+    <a href="#shot5" aria-label="Naar foto 5"></a>
+    <a href="#shot6" aria-label="Naar foto 6"></a>
+    <a href="#shot7" aria-label="Naar foto 7"></a>
+    <a href="#shot8" aria-label="Naar foto 8"></a>
+  </nav>
+</section>
+<script>
+  (function () {
+    // Pak alle afbeeldingen uit de home-showcase
+    const thumbs = Array.from(document.querySelectorAll('.showcase .sc-item img'));
+    if (!thumbs.length) return;
+
+    // Reuse bestaande lightbox als die al bestaat, anders maak 'm aan
+    let lb = document.getElementById('lightbox');
+    let lbImg, lbClose, lbPrev, lbNext, lbCounter;
+
+    if (!lb) {
+      lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.id = 'lightbox';
+      lb.innerHTML = `
+        <button class="btn close" id="lbClose" aria-label="Sluiten">✕</button>
+        <button class="btn prev"  id="lbPrev"  aria-label="Vorige">‹</button>
+        <img id="lbImage" alt="" />
+        <button class="btn next"  id="lbNext"  aria-label="Volgende">›</button>
+        <div class="counter" id="lbCounter"></div>
+      `;
+      document.body.appendChild(lb);
+    }
+
+    lbImg = lb.querySelector('#lbImage');
+    lbClose = lb.querySelector('#lbClose');
+    lbPrev = lb.querySelector('#lbPrev');
+    lbNext = lb.querySelector('#lbNext');
+    lbCounter = lb.querySelector('#lbCounter');
+
+    let idx = 0;
+    const getSrc = el => el.getAttribute('data-large') || el.getAttribute('src');
+
+    function openAt(i) {
+      idx = (i + thumbs.length) % thumbs.length;
+      lbImg.src = getSrc(thumbs[idx]);
+      lbImg.alt = thumbs[idx].alt || '';
+      lbCounter.textContent = (idx + 1) + ' / ' + thumbs.length;
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+    function next() { openAt(idx + 1); }
+    function prev() { openAt(idx - 1); }
+
+    thumbs.forEach((img, i) => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => openAt(i));
+    });
+
+    lbClose.addEventListener('click', close);
+    lbNext.addEventListener('click', next);
+    lbPrev.addEventListener('click', prev);
+    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft')  prev();
+    });
+  })();
+</script>
+
+</body>
+</html>

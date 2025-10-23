@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Onze werken - Colortime</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="logo">
+      <img src="images/logo@2x.jpg" alt="Colortime logo" />
+    </div>
+    <nav class="topnav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="werken.html" class="active">Onze werken</a></li>
+        <li><a href="over-ons.html">Over ons</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Onze werken</h1>
+
+    <!-- 4-koloms galerij -->
+    <div class="gallery" id="gallery">
+      <!--
+        Gebruik waar mogelijk grotere foto's voor de lightbox.
+        Zet dan het grote pad in data-large="", en de tegel-thumb in src="".
+        Heb je (nog) geen aparte thumbs? laat data-large weg, dan gebruikt hij src.
+      -->
+      <div class="project">
+        <img src="images/project1.jpg" data-large="images/project1.jpg" alt="Woonkamer" />
+       
+      </div>
+      <div class="project">
+        <img src="images/project2.jpg" data-large="images/project2.jpg" alt="Keuken" />
+        
+      </div>
+      <div class="project">
+        <img src="images/project3.jpg" data-large="images/project3.jpg" alt="Slaapkamer" />
+        
+      </div>
+
+      <!-- Voeg hier gewoon meer tegels toe; de grid zet ze netjes per 4 -->
+      <!-- Voorbeeld extra items: -->
+     
+       <div class="project">
+        <img src="images/auto.jpeg" data-large="images/auto.jpeg" alt="Trap" />
+      </div>
+      <div class="project">
+        <img src="images/barkeuken.jpeg" data-large="images/barkeuken.jpeg" alt="Trap" />
+      </div>
+      <div class="project">
+        <img src="images/hoek.jpeg" data-large="images/hoek.jpeg" alt="Trap" />
+      </div>
+      <div class="project">
+        <img src="images/keuken.jpeg" data-large="images/keuken.jpeg" alt="Trap" />
+      </div>
+      <div class="project">
+        <img src="images/slaapkamer.jpeg" data-large="images/slaapkamer.jpeg" alt="Trap" />
+      </div>
+      <div class="project">
+        <img src="images/slaapkamer2.jpeg" data-large="images/slaapkamer2.jpeg" alt="Trap" />
+      </div>
+      <div class="project">
+        <img src="images/trapauto.jpeg" data-large="images/trapauto.jpeg" alt="Trap">
+     </div>
+    </div>
+  </main>
+
+  <!-- Lightbox overlay -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="btn close" id="lbClose" aria-label="Sluiten">✕</button>
+    <button class="btn prev"  id="lbPrev"  aria-label="Vorige">‹</button>
+    <img id="lbImage" alt="" />
+    <button class="btn next"  id="lbNext"  aria-label="Volgende">›</button>
+    <div class="counter" id="lbCounter"></div>
+  </div>
+
+  <!-- Kleine, pure JS voor openen/sluiten & pijltjes -->
+  <script>
+    (function () {
+      const thumbs = Array.from(document.querySelectorAll('.gallery img'));
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lbImage');
+      const lbClose = document.getElementById('lbClose');
+      const lbPrev = document.getElementById('lbPrev');
+      const lbNext = document.getElementById('lbNext');
+      const lbCounter = document.getElementById('lbCounter');
+
+      let idx = 0;
+
+      function largeSrc(imgEl) {
+        return imgEl.getAttribute('data-large') || imgEl.getAttribute('src');
+      }
+
+      function openAt(i) {
+        idx = (i + thumbs.length) % thumbs.length;
+        lbImg.src = largeSrc(thumbs[idx]);
+        lbImg.alt = thumbs[idx].alt || '';
+        lbCounter.textContent = (idx + 1) + ' / ' + thumbs.length;
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // geen scroll achter de overlay
+      }
+
+      function close() {
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+
+      function next() { openAt(idx + 1); }
+      function prev() { openAt(idx - 1); }
+
+      thumbs.forEach((img, i) => {
+        img.addEventListener('click', () => openAt(i));
+      });
+
+      lbClose.addEventListener('click', close);
+      lbNext.addEventListener('click', next);
+      lbPrev.addEventListener('click', prev);
+
+      // Klik buiten de foto sluit (maar niet op de knoppen zelf)
+      lb.addEventListener('click', (e) => {
+        if (e.target === lb) close();
+      });
+
+      // Toetsenbord: Esc, pijlen
+      document.addEventListener('keydown', (e) => {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') prev();
+      });
+    })();
+  </script>
+
+</body>
+</html>
