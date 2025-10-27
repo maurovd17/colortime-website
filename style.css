@@ -782,6 +782,24 @@ h1 {
   .topnav ul { gap: 10px; }
   .topnav ul li a { font-size: 0.875rem; }
 }
+/* --- Fix mobile header: keep menu on one line & make it consistent --- */
+@media (max-width: 560px) {
+  .topbar{
+    padding: 8px 12px;                /* a bit tighter so everything fits */
+  }
+  .logo img{
+    height: 58px;                     /* smaller logo on small screens */
+  }
+  .topnav ul{
+    gap: 16px;                        /* smaller spacing between items */
+    flex-wrap: nowrap;                /* do NOT break to a second line */
+  }
+  .topnav ul li a{
+    font-size: 0.95rem;               /* slightly smaller text */
+    white-space: nowrap;              /* never break inside words */
+  }
+}
+
 
 
 
