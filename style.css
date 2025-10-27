@@ -756,6 +756,33 @@ h1 {
     margin-top: 10px;
   }
 }
+/* ===== NAVBAR: mobiel smaller maken zodat alles op 1 regel past ===== */
+@media (max-width: 768px) {
+  .topbar {
+    padding: 8px 16px;          /* iets compacter */
+  }
+
+  .logo img {
+    height: 60px;               /* logo iets kleiner op mobiel */
+  }
+
+  .topnav ul {
+    gap: 16px;                  /* minder ruimte tussen links */
+    flex-wrap: nowrap;          /* probeer op 1 regel te houden */
+  }
+
+  .topnav ul li a {
+    font-size: 0.95rem;         /* links iets kleiner */
+  }
+}
+
+/* Extra krappe schermen (very small phones) */
+@media (max-width: 380px) {
+  .logo img { height: 52px; }
+  .topnav ul { gap: 10px; }
+  .topnav ul li a { font-size: 0.875rem; }
+}
+
 
 
 
