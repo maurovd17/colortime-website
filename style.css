@@ -778,4 +778,62 @@ h1 {
   line-height: 1.8;
   color: #333;
 }
+/* ========= HAMBURGER MENU ========= */
+
+/* Standaard: knop verbergen op desktop */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  margin-left: 16px;
+}
+
+/* Mobiel: navbar compacter + hamburger tonen */
+@media (max-width: 768px) {
+
+  .topbar {
+    padding: 8px 12px;
+    justify-content: space-between;
+  }
+
+  .logo img {
+    height: 56px;
+  }
+
+  /* Hamburger zichtbaar */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Menu standaard VERBORGEN op mobiel */
+  .topnav ul {
+    position: absolute;
+    top: 70px;              /* net onder de balk */
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 10px 16px 12px;
+    background: #ffffff;
+    display: none;          /* wordt 'flex' wanneer open */
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    z-index: 99;
+  }
+
+  /* Als .open erbij komt via JS → menu tonen */
+  .topnav ul.open {
+    display: flex;
+  }
+
+  /* Links iets compacter op mobiel */
+  .topnav ul li a {
+    font-size: 0.95rem;
+    padding: 6px 0;
+    white-space: nowrap;
+  }
+}
+
 
