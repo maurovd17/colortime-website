@@ -769,3 +769,13 @@ h1 {
   .topnav ul { gap: 8px; }
   .topnav ul li a { font-size: 0.85rem; }
 }
+/* ---- Over ons: zelfde afstand onder de navbar als de andere pagina's ---- */
+.over-ons {
+  max-width: 900px;
+  margin: 0 auto 80px;        /* geen extra margin-top meer */
+  padding: 130px 20px 0;      /* 130px top = zelfde als main */
+  text-align: left;
+  line-height: 1.8;
+  color: #333;
+}
+
