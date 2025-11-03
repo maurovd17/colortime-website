@@ -799,6 +799,118 @@ h1 {
     white-space: nowrap;              /* never break inside words */
   }
 }
+/* === 📱 Globale mobile-fix voor alle pagina's === */
+@media (max-width: 768px) {
+  /* Basis: iets grotere leesbare tekst */
+  html, body {
+    font-size: 16px;
+  }
+
+  /* Alle hoofdcontainers op mobiel dezelfde marge/padding geven */
+  main,
+  .over-ons,
+  .contact,
+  .detailpagina {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 110px 16px 40px;  /* ruimte voor navbar + wat lucht */
+    box-sizing: border-box;
+  }
+
+  /* Hero op home: geen rare extra marge, iets lager op gsm */
+  .hero {
+    margin-top: 0;       /* overschrijft eerdere margin-top: 100px; */
+    height: 70vh;        /* iets minder hoog dan 90vh */
+    padding: 0 16px;     /* houdt tekst uit de randen */
+  }
+
+  .hero-text h1 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+  }
+
+  .hero-text p {
+    font-size: 1.1rem;
+  }
+
+  /* Titels op mobiel overal ongeveer zelfde grootte */
+  h1,
+  .detailpagina h1,
+  .over-ons h1,
+  .contact h1,
+  .showcase h2,
+  .services h2 {
+    font-size: 1.9rem;
+  }
+
+  /* Grids / kaarten full-width laten ademen */
+  .projecten-container,
+  .gallery,
+  .showcase,
+  .services,
+  .contact-grid {
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;   /* sowieso 1 per rij op kleine gsm */
+    gap: 18px;
+  }
+
+  .project,
+  .contact-card,
+  .services__right {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Showcase-cards: iets lagere afbeeldingen op gsm */
+  .sc-item img {
+    height: 220px;
+    object-fit: cover;
+  }
+
+  /* Contactfoto onderaan mooi responsief */
+  .contact-photo img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+}
+
+/* === NAVBAR: mobiel consistent houden === */
+@media (max-width: 768px) {
+  .topbar{
+    padding: 8px 12px;
+  }
+
+  .logo img{
+    height: 58px;
+  }
+
+  .topnav ul{
+    gap: 14px;
+    flex-wrap: nowrap;
+  }
+
+  .topnav ul li a{
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+}
+
+/* Hele kleine schermen: nog iets compacter */
+@media (max-width: 380px) {
+  .logo img { height: 50px; }
+  .topnav ul { gap: 8px; }
+  .topnav ul li a { font-size: 0.85rem; }
+}
+
 
 
 
