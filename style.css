@@ -835,5 +835,104 @@ h1 {
     white-space: nowrap;
   }
 }
+/* ==== FOOTER ==== */
+
+.site-footer {
+  background-color: #d35400;        
+  color: #fff;
+  padding: 3rem 1.5rem;
+  margin-top: 4rem;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 2fr 3fr;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+.footer-col {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer-col--brand {
+  font-size: 0.9rem;
+}
+
+.footer-logo {
+  max-width: 180px;
+  margin-bottom: 1rem;
+}
+
+.footer-company {
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.footer-tagline {
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.footer-address,
+.footer-contact,
+.footer-vat {
+  margin: 0.3rem 0;
+}
+
+.footer-heading {
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.8rem;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li {
+  margin-bottom: 0.35rem;
+}
+
+/* Links in footer */
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsief gedrag */
+@media (max-width: 900px) {
+  .footer-inner {
+    grid-template-columns: 1.3fr 1.7fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-footer {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-col {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
 
 
