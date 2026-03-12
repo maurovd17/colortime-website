@@ -1126,13 +1126,12 @@ section {
     font-size: 0.95rem;
     padding: 6px 12px;
     margin: 8px 0 16px;
-    white-space: normal;
+    white-space: nowrap;  /* keep all words on one line */
     text-align: center;
     display: inline-block;
     background: var(--color-accent);
     color: #fff;             /* tekst wit zoals gevraagd */
     border-radius: 8px;
-    max-width: 100%;
     line-height: 1.4;
   }
 
