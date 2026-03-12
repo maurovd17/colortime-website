@@ -616,6 +616,7 @@ section {
 }
 .services__locatie::before {
   content: '📍';
+  margin-right: 4px;
 }
 
 
@@ -1122,12 +1123,17 @@ section {
 
   /* refine location badge on mobile */
   .services__locatie {
-    font-size: 0.85rem;
-    padding: 4px 8px;
-    margin: 6px 0 12px;
-    white-space: nowrap;
+    font-size: 0.95rem;
+    padding: 6px 12px;
+    margin: 8px 0 16px;
+    white-space: normal;
     text-align: center;
-    display: inline-flex;
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;             /* tekst wit zoals gevraagd */
+    border-radius: 8px;
+    max-width: 100%;
+    line-height: 1.4;
   }
 
   .topnav ul li a {
