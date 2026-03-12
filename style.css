@@ -958,6 +958,11 @@ section {
 }
 
 @media (max-width: 960px) {
+  /* keep two columns until very narrow tablets */
+  .services { grid-template-columns: 1.2fr 1fr; gap: 24px; }
+}
+
+@media (max-width: 480px) {
   .services { grid-template-columns: 1fr; }
 }
 
@@ -992,10 +997,18 @@ section {
     padding: 0 16px;
   }
 
+  .hero-text {
+    max-width: 90%;
+    /* remove solid background so text floats over image; text-shadow gives contrast */
+    background: none;
+    padding: 0;
+  }
+
   .hero-text h1 {
-    font-size: 2.2rem;
+    font-size: 1.9rem;
     line-height: 1.2;
   }
+  .hero-text h2 { display: none; } /* hide secondary headline on small screens */
 
   .hero-text p {
     font-size: 1.1rem;
@@ -1072,9 +1085,20 @@ section {
     height: 58px;
   }
 
+  /* hide links by default; only show when menu is explicitly opened */
   .topnav ul{
     gap: 14px;
     flex-wrap: nowrap;
+    display: none !important;
+  }
+
+  .topnav ul.open {
+    display: flex !important;
+  }
+
+  /* ensure scrolling or sticky state never accidentally reveals items */
+  .topbar.sticky .topnav ul {
+    display: none !important;
   }
 
   .topnav ul li a{
@@ -1094,20 +1118,28 @@ section {
     justify-content: center;
     gap: 22px;
     padding: 0;
-    display: none;
   }
-  .topnav ul.open {
-    display: flex;
+
+  /* refine location badge on mobile */
+  .services__locatie {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    margin: 8px 0 16px;
+    white-space: normal;
+    text-align: center;
   }
+
   .topnav ul li a {
     font-size: 1.15rem;
     padding: 12px 0;
   }
 
-  /* Ensure sections stack more aggressively earlier */
-  .why-cards {
-    flex-direction: column;
-    gap: 1.5rem;
+  /* Cards layout remains horizontal on phones; stack only on very narrow screens */
+  @media (max-width: 500px) {
+    .why-cards {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
   }
 
   /* bigger buttons on mobile for easier tapping */
