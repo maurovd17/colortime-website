@@ -71,79 +71,63 @@ h1, h2, h3 {
 /* =======================
    NAVBAR
    ======================= */
+
+/* Mobiel eerst: logo boven, nav eronder gecentreerd */
 .topbar {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(6px);
-  padding: 10px 30px;
+  padding: 8px 16px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  flex-wrap: nowrap;
-  overflow-x: auto;
-}
-
-.topbar.sticky {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  transition: background 0.3s;
-}
-
-.topnav ul {
-  flex-wrap: nowrap;
-}
-.topnav ul li {
-  flex-shrink: 0;
-}
-
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: var(--color-accent);
-  margin-left: 16px;
-}
-.menu-toggle:focus {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
 }
 
 .logo img {
-  height: 85px;
+  height: 52px;
   width: auto;
   display: block;
-  image-rendering: auto;
 }
 
 .topnav ul {
   list-style: none;
   display: flex;
-  gap: 40px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 4px;
+  margin: 0;
+  padding: 4px 0 2px;
+  justify-content: center;
+}
+
+.topnav ul li {
+  flex-shrink: 0;
 }
 
 .topnav ul li a {
   text-transform: uppercase;
-  letter-spacing: .08em;
-  padding: 4px 0;
+  letter-spacing: .05em;
+  padding: 4px 5px;
   position: relative;
   text-decoration: none;
   color: #222;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 0.72rem;
+  white-space: nowrap;
   transition: color 0.3s;
+  display: inline-block;
 }
+
 .topnav ul li a::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -4px;
+  bottom: -2px;
   width: 0;
   height: 2px;
   background: var(--color-accent);
@@ -159,14 +143,41 @@ h1, h2, h3 {
   color: var(--color-accent);
 }
 
-/* sticky — tekst altijd donker op witte achtergrond */
+.menu-toggle {
+  display: none;
+}
+
+.topbar.sticky {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+}
 .topbar.sticky .topnav a {
-  filter: none;
   color: #222;
 }
 .topbar.sticky .topnav a:hover,
 .topbar.sticky .topnav a.active {
   color: var(--color-accent);
+}
+
+/* Desktop: logo en nav naast elkaar */
+@media (min-width: 769px) {
+  .topbar {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 30px;
+  }
+  .logo img {
+    height: 85px;
+  }
+  .topnav ul {
+    gap: 40px;
+    padding: 0;
+  }
+  .topnav ul li a {
+    font-size: 1.1em;
+    padding: 4px 0;
+    letter-spacing: .08em;
+  }
 }
 
 /* =======================
@@ -175,6 +186,20 @@ h1, h2, h3 {
 main {
   padding: 130px 20px 40px;
   text-align: center;
+}
+
+/* Op mobiel minder padding omdat navbar kleiner is */
+@media (max-width: 768px) {
+  main,
+  .detailpagina {
+    padding: 100px 16px 40px;
+  }
+  .over-ons {
+    padding: 100px 16px 0;
+  }
+  .contact {
+    padding: 100px 16px 40px;
+  }
 }
 
 h1 {
@@ -292,6 +317,7 @@ h1 {
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
   background: #fff;
+  width: auto;
   transition: transform .2s ease, box-shadow .2s ease;
 }
 
@@ -1129,11 +1155,6 @@ section {
 }
 
 @media (max-width: 768px) {
-  html, body {
-    font-size: 16px;
-  }
-
-  /* Hero */
   .hero {
     margin-top: 0;
     height: 60vh;
@@ -1143,42 +1164,13 @@ section {
   .hero-overlay {
     background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 75%);
   }
-  .hero-text {
-    max-width: 90%;
-    background: none;
-    padding: 0;
-  }
   .hero-text h1 {
     font-size: 1.9rem;
     line-height: 1.2;
   }
   .hero-text h2 { display: none; }
-  .hero-text p {
-    font-size: 1.1rem;
-  }
+  .hero-text p { font-size: 1.1rem; }
 
-  /* Paginacontainers */
-  main,
-  .detailpagina {
-    max-width: 100%;
-    margin: 0 auto 60px;
-    padding: 110px 16px 40px;
-    box-sizing: border-box;
-  }
-
-  .over-ons {
-    max-width: 100%;
-    padding: 110px 16px 0;
-  }
-
-  .contact {
-    max-width: 100%;
-    margin: 0 auto 60px;
-    padding: 110px 16px 40px;
-    box-sizing: border-box;
-  }
-
-  /* Titels */
   h1,
   .detailpagina h1,
   .over-ons h1,
@@ -1188,7 +1180,6 @@ section {
     font-size: 1.9rem;
   }
 
-  /* Grids */
   .projecten-container,
   .gallery,
   .showcase,
@@ -1217,18 +1208,9 @@ section {
     gap: 24px;
   }
 
-  .contact-card {
-    text-align: center;
-  }
-
-  .socials-list {
-    justify-content: center;
-  }
-
-  .social-btn img {
-    width: 38px;
-    height: 38px;
-  }
+  .contact-card { text-align: center; }
+  .socials-list { justify-content: center; }
+  .social-btn img { width: 38px; height: 38px; }
 
   .contact-photo img {
     width: 100%;
@@ -1239,91 +1221,27 @@ section {
     margin-top: 10px;
   }
 
-  /* Navbar op mobiel */
-  .topbar {
-    padding: 8px 12px;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    overflow-x: visible;
-  }
-
-  .topbar.sticky {
-    background: rgba(255, 255, 255, 0.95);
-  }
-  .topbar.sticky .topnav a {
-    filter: none;
-    color: #222;
-  }
-
-  .logo img {
-    height: 56px;
-  }
-
-  .menu-toggle {
-    display: none !important;
-  }
-
-  .topnav {
-    display: block;
-    width: 100%;
-  }
-
-  .topnav ul {
-    position: static;
-    display: flex !important;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 6px;
-    margin: 0;
-    padding: 6px 0 2px;
-    background: transparent;
-    box-shadow: none;
-    list-style: none;
-  }
-
-  .topnav ul li a {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: bold;
-    padding: 4px 4px;
-    white-space: nowrap;
-    color: #222;
-  }
-
-  .topnav ul li a:hover,
-  .topnav ul li a.active {
-    color: var(--color-accent);
-  }
-
-  /* Locatie badge */
   .services__locatie {
     font-size: 0.95rem;
     padding: 6px 12px;
     margin: 8px 0 16px;
     white-space: normal;
-    overflow-wrap: break-word;
-    word-break: keep-all;
     text-align: center;
     display: inline-block;
     max-width: 90vw;
     line-height: 1.4;
   }
 
-  /* Buttons */
   .btn-cta {
     padding: 16px 28px;
     font-size: 1rem;
   }
 
-  /* Why cards */
   .why-cards {
     flex-direction: column;
     gap: 1.5rem;
   }
 
-  /* Review slider knoppen verbergen */
   .rev-prev, .rev-next { display: none; }
 }
 
@@ -1332,29 +1250,12 @@ section {
 }
 
 @media (max-width: 640px) {
-  .site-footer {
-    padding: 2.5rem 1.25rem;
-  }
-  .footer-inner {
-    grid-template-columns: 1fr;
-  }
-  .footer-col {
-    margin-bottom: 1.5rem;
-  }
+  .site-footer { padding: 2.5rem 1.25rem; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-col { margin-bottom: 1.5rem; }
 }
 
 @media (max-width: 480px) {
   .sc-track { grid-auto-columns: 100%; }
   .sc-item img { height: 220px; }
-  .topnav ul li a {
-    font-size: 0.9rem;
-    padding: 4px 8px;
-  }
-  .topnav ul { gap: 12px; }
-}
-
-@media (max-width: 380px) {
-  .logo img { height: 50px; }
-  .topnav ul { gap: 8px; }
-  .topnav ul li a { font-size: 0.85rem; }
 }
