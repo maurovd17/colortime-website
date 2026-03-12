@@ -604,15 +604,16 @@ section {
 .services__right li:last-child { border-bottom: none; }
 
 .services__locatie {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-block;
+  vertical-align: middle;
   background: var(--color-accent);
   color: #fff;
   padding: 6px 12px;
   border-radius: 8px;
   font-weight: 600;
   margin: 14px 0 24px;
+  white-space: nowrap; /* ensure text stays on one line */
+  line-height: 1.4;
 }
 .services__locatie::before {
   content: '📍';
