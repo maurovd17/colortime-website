@@ -87,9 +87,23 @@ h1, h2, h3 {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 100;
+  z-index: 1000;        /* higher so content never sneaks above */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex-wrap: nowrap;    /* keep links on one line */
+  overflow-x: auto;    /* allow scrolling if too many items */
 }
+
+.topnav ul {
+  flex-wrap: nowrap;
+}
+.topnav ul li {
+  flex-shrink: 0;
+}
+
+.menu-toggle {
+  color: var(--color-accent); /* hamburger icon orange */
+}
+
 
 .logo img {
   height: 85px;
@@ -532,6 +546,8 @@ section {
    ======================= */
 .services {
   position: relative;
+  margin-top: 80px;               /* extra breathing room under hero */
+  max-width: 900px;               /* a bit narrower to feel less stretched */
 }
 .services h2::before {
   content: '';
@@ -544,6 +560,7 @@ section {
   background: var(--color-primary);
   border-radius: 2px;
 }
+.services {
   width: min(1200px, 92%);
   margin: 60px auto 80px;
   display: grid;
@@ -551,6 +568,7 @@ section {
   gap: 32px;
   align-items: start;
 }
+
 
 .services h2 {
   font-size: 2.2rem;
@@ -586,15 +604,20 @@ section {
 .services__right li:last-child { border-bottom: none; }
 
 .services__locatie {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: var(--color-accent);
-  color: var(--color-primary);
-  border: 1px solid #ffd7b8;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-weight: 700;
-  margin: 6px 0 14px;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  margin: 14px 0 24px;
 }
+.services__locatie::before {
+  content: '📍';
+}
+
 
 /* CTA-knoppen */
 .btn-cta {
@@ -630,8 +653,11 @@ section {
   text-align: center;
   color: #fff;
   margin-top: 100px;   /* ruimte onder navbar */
+  margin-bottom: 60px; /* scheiding met services */
   background-attachment: fixed;
 }
+
+.hero-text { max-width: 90%; }
 .hero-text h1 {
   text-shadow: 0 3px 8px rgba(0,0,0,0.6);
 }
