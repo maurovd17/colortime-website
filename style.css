@@ -89,7 +89,7 @@ h1, h2, h3 {
 }
 
 .logo img {
-  height: 52px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -117,7 +117,7 @@ h1, h2, h3 {
   text-decoration: none;
   color: #222;
   font-weight: bold;
-  font-size: 0.62rem;
+  font-size: 0.55rem;
   white-space: nowrap;
   transition: color 0.3s;
   display: inline-block;
