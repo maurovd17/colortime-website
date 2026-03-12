@@ -1,14 +1,5 @@
 // main.js - shared scripts for the Colortime site
 
-// hamburger menu toggle
-function toggleMenu() {
-  const menu = document.querySelector('.topnav ul');
-  const btn = document.querySelector('.menu-toggle');
-  const isOpen = menu.classList.toggle('open');
-  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-}
-
-
 function markActiveLink() {
   const current = document.body.dataset.page;
   if (!current) return;
@@ -20,13 +11,9 @@ function markActiveLink() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // highlight the current nav link
   markActiveLink();
-
-  // initialize review slider if present
   initReviewSlider();
 
-  // sticky topbar on scroll
   const topbar = document.querySelector('.topbar');
   if (topbar) {
     window.addEventListener('scroll', () => {
@@ -35,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // floating offer button
   const cta = document.createElement('a');
   cta.href = 'mailto:colortimevdm@gmail.com?subject=Offerte';
   cta.className = 'floating-cta';
@@ -96,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
   thumbs.forEach((img, i) => {
     img.style.cursor = 'zoom-in';
     img.addEventListener('click', (e) => {
-      // voorkomen dat een omringende <a> navigeert
       if (e.currentTarget.closest('a')) e.preventDefault();
       openAt(i);
     });
@@ -133,10 +118,8 @@ function initReviewSlider() {
     idx = (idx - 1 + cards.length) % cards.length;
     update();
   });
-  // auto-advance every 7 seconds
   setInterval(() => {
     idx = (idx + 1) % cards.length;
     update();
   }, 7000);
 }
-
