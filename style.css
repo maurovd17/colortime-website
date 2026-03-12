@@ -962,7 +962,7 @@ section {
   /* Hero onder navbar, iets lager & smaller tekst */
   .hero {
     margin-top: 0;
-    height: 70vh;
+    height: 60vh;
     padding: 0 16px;
   }
 
@@ -1055,7 +1055,42 @@ section {
     font-size: 0.95rem;
     white-space: nowrap;
   }
+
+  /* mobile menu tweaks – full-screen overlay, bigger tap targets */
+  .topnav ul {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.98);
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    padding: 0;
+    display: none;
+  }
+  .topnav ul.open {
+    display: flex;
+  }
+  .topnav ul li a {
+    font-size: 1.15rem;
+    padding: 12px 0;
+  }
+
+  /* Ensure sections stack more aggressively earlier */
+  .why-cards {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* bigger buttons on mobile for easier tapping */
+  .btn-cta {
+    padding: 16px 28px;
+    font-size: 1rem;
+  }
 }
+
 
 /* Kleinere schermen: 2 of 1 item in carrousel */
 @media (max-width: 720px) {
@@ -1250,16 +1285,41 @@ body {
   background: linear-gradient(to bottom, #fafafa 0%, #f0f0f5 100%);
 }
 
-/* sticky header */
+/* sticky header – always keep light background so links stay readable
+   (original design switched to dark + inverted text for contrast, but on
+   small screens the dark bar caused the menu items to disappear). */
 .topbar.sticky {
-  background: rgba(0,0,0,0.85);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(8px);
   transition: background 0.3s;
 }
 .topbar.sticky .topnav a,
 .topbar.sticky .logo img {
-  filter: brightness(0) invert(1);
+  /* no inversion needed: text stays dark on light background */
+  filter: none;
+  color: black;
 }
+
+/* override mobile behaviour for sticky header and hero
+   - remove fixed attachment on the hero (black boxes on iOS/Android)
+   - lighten overlay a bit so the image is visible
+   - keep header always white on small screens */
+@media (max-width: 768px) {
+  .hero {
+    background-attachment: scroll;
+  }
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 75%);
+  }
+  .topbar.sticky {
+    background: rgba(255,255,255,0.95);
+  }
+  .topbar.sticky .topnav a {
+    filter: none;
+    color: black;
+  }
+}
+
 
 /* waarom‑us sectie */
 .why-us {
