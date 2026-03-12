@@ -1273,15 +1273,20 @@ section {
     position: static;
     display: flex !important;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
-    gap: 12px;
+    gap: 6px;
     margin: 0;
     padding: 6px 0 2px;
     background: transparent;
     box-shadow: none;
     list-style: none;
   }
+    .topnav ul li a {
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+  
 
   .topnav ul li a {
     display: inline-block;
