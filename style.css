@@ -1282,17 +1282,12 @@ section {
     box-shadow: none;
     list-style: none;
   }
-    .topnav ul li a {
-  font-size: 0.78rem;
-  white-space: nowrap;
-}
-  
 
   .topnav ul li a {
     display: inline-block;
-    font-size: 0.95rem;
+    font-size: 0.78rem;
     font-weight: bold;
-    padding: 4px 6px;
+    padding: 4px 4px;
     white-space: nowrap;
     color: #222;
   }
