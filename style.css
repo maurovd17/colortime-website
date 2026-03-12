@@ -964,11 +964,6 @@ section {
 }
 
 /* hide any accidental horizontal overflow on small devices */
-@media (max-width: 768px) {
-  body {
-    overflow-x: hidden;
-  }
-}
 
 @media (max-width: 900px) {
   .gallery { grid-template-columns: repeat(2, 1fr); }
