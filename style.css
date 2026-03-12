@@ -1089,15 +1089,15 @@ section {
     height: 58px;
   }
 
-  /* hide links by default; only show when menu is explicitly opened */
-  .topnav ul{
-    gap: 14px;
-    flex-wrap: nowrap;
-    display: none !important;
-  }
+  /* hamburger unnecessary when links always visible */
+  .menu-toggle { display: none; }
 
-  .topnav ul.open {
+  /* keep mobile nav links visible and laid out horizontally */
+  .topnav ul{
+    gap: 20px;
+    flex-wrap: nowrap;
     display: flex !important;
+    justify-content: center;
   }
 
   /* ensure scrolling or sticky state never accidentally reveals items */
@@ -1110,17 +1110,11 @@ section {
     white-space: nowrap;
   }
 
-  /* mobile menu tweaks – full-screen overlay, bigger tap targets */
+  /* on mobile we no longer use overlay; keep nav static */
   .topnav ul {
-    position: absolute;
-    top: 52px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255,255,255,0.98);
-    flex-direction: column;
-    justify-content: center;
-    gap: 22px;
+    position: static;
+    background: transparent;
+    flex-direction: row;
     padding: 0;
   }
 
