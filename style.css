@@ -112,12 +112,12 @@ h1, h2, h3 {
 .topnav ul li a {
   text-transform: uppercase;
   letter-spacing: .05em;
-  padding: 4px 5px;
+  padding: 2px 3px;
   position: relative;
   text-decoration: none;
   color: #222;
   font-weight: bold;
-  font-size: 0.55rem;
+  font-size: 0.48rem;
   white-space: nowrap;
   transition: color 0.3s;
   display: inline-block;
