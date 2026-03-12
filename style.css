@@ -960,12 +960,14 @@ section {
 }
 
 @media (max-width: 960px) {
-  /* keep two columns until very narrow tablets */
-  .services { grid-template-columns: 1.2fr 1fr; gap: 24px; }
+  .services { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 480px) {
-  .services { grid-template-columns: 1fr; }
+/* hide any accidental horizontal overflow on small devices */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1127,13 +1129,16 @@ section {
     font-size: 0.95rem;
     padding: 6px 12px;
     margin: 8px 0 16px;
-    white-space: nowrap;  /* keep all words on one line */
+    white-space: normal; /* allow wrap on tiny screens */
+    overflow-wrap: break-word;
+    word-break: keep-all;
     text-align: center;
     display: inline-block;
     background: var(--color-accent);
     color: #fff;             /* tekst wit zoals gevraagd */
     border-radius: 8px;
     line-height: 1.4;
+    max-width: 90vw;
   }
 
   .topnav ul li a {
