@@ -1087,10 +1087,10 @@ section {
   /* hamburger unnecessary when links always visible */
   .menu-toggle { display: none; }
 
-  /* keep mobile nav links visible and laid out horizontally */
+  /* keep mobile nav links visible and laid out horizontally; wrap if too narrow */
   .topnav ul{
     gap: 20px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     display: flex !important;
     justify-content: center;
   }
@@ -1108,6 +1108,14 @@ section {
     background: transparent;
     flex-direction: row;
     padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    .topnav ul li a {
+      font-size: 0.9rem;
+      padding: 4px 8px;
+    }
+    .topnav ul { gap: 12px; }
   }
 
   /* refine location badge on mobile */
