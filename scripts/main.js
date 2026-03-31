@@ -15,6 +15,8 @@ function initRevealOnScroll() {
     'main > section',
     'main > h1',
     '.gallery .project',
+    '.work-story',
+    '.solo-card',
     '.why-cards .card',
     '.services__right li',
     '.sc-item',
@@ -32,7 +34,7 @@ function initRevealOnScroll() {
     }
 
     const isCardLike =
-      element.matches('.gallery .project, .why-cards .card, .services__right li, .sc-item, .footer-col, .contact-card, .over-ons li');
+      element.matches('.gallery .project, .work-story, .solo-card, .why-cards .card, .services__right li, .sc-item, .footer-col, .contact-card, .over-ons li');
 
     if (isCardLike) {
       element.dataset.reveal = 'zoom';
@@ -167,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // lightbox functionality (used on homepage and works pages)
 (function () {
-  const thumbs = Array.from(document.querySelectorAll('.showcase .sc-item img, .gallery .project img'));
+  const thumbs = Array.from(document.querySelectorAll('.showcase .sc-item img, .gallery .project img, .works-flow img, .solo-projects__grid img'));
   if (!thumbs.length) return;
 
   let lb = document.getElementById('lightbox');
