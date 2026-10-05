@@ -2447,3 +2447,41 @@ section {
 #quote-form-status[data-state="sending"] { background: #f5f5f5; }
 #quote-form-status[data-state="success"] { background: #edf8ee; border-left: 3px solid #26733b; }
 #quote-form-status[data-state="error"] { background: #fff3e8; border-left: 3px solid var(--color-primary-dark); }
+
+/* Service pages: project photos are split into separate sections. */
+.service-page { width: min(100%, 1000px); margin: 0 auto; padding-top: 150px; overflow-wrap: anywhere; }
+.service-page section { margin-bottom: 2.5rem; }
+.service-page h1 { color: var(--color-accent); }
+.service-page h2 { margin-bottom: 1rem; font-size: 1.6rem; color: var(--color-primary-dark); }
+.service-page p { max-width: 720px; margin: 0 auto 1.25rem; }
+.service-page .service-gallery {
+  width: 100%;
+  padding: 0;
+  margin: 1.5rem auto 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+.service-gallery .project:hover { transform: none; }
+.service-gallery .project img { height: auto; width: 100%; }
+.service-page .service-gallery--single { grid-template-columns: 1fr; max-width: 480px; }
+.service-contact { padding: 2rem 1rem; border-radius: 16px; background: #fff3e8; }
+.service-related ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+@media (max-width: 768px) {
+  .service-page { padding-top: 118px; }
+}
+@media (max-width: 600px) {
+  .service-page .service-gallery { grid-template-columns: 1fr; max-width: 480px; }
+}
+.service-work-list { max-width: 680px; margin: 1rem auto; padding-left: 1.5rem; text-align: left; }
+.service-work-list li { margin-bottom: 0.5rem; }
+.service-trust { padding: 1.5rem; border-radius: 16px; background: #fff; border: 1px solid #e4d8cf; }
+.service-faq { text-align: left; }
+.service-faq h2 { text-align: center; }
+.service-faq details { margin-bottom: 0.75rem; border: 1px solid #e4d8cf; border-radius: 10px; background: #fff; }
+.service-faq summary { padding: 1rem; font-weight: 600; cursor: pointer; }
+.service-faq summary:focus-visible { outline: 3px solid var(--color-primary-dark); outline-offset: 2px; }
+.service-faq details p { max-width: none; margin: 0; padding: 0 1rem 1rem; }
+@media (max-width: 480px) {
+  body[data-page="diensten"] .topnav ul { gap: 4px; }
+  body[data-page="diensten"] .topnav ul li a { font-size: 0.62rem; padding-inline: 3px; }
+}
