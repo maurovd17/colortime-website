@@ -147,9 +147,11 @@
     const href = (link.getAttribute('href') || '').trim();
     const isPhone = /^tel:/i.test(href);
     const isEmail = /^mailto:/i.test(href);
+    const isWhatsApp = /^https:\/\/wa\.me\//i.test(href);
     const text = (link.textContent || '').replace(/\s+/g, ' ').trim();
     const subject = isEmail ? new URLSearchParams(href.split('?')[1] || '').get('subject') : null;
     const isQuote = link.dataset.analyticsEvent === 'quote_click' ||
+      /^(?:\.\/)?offerte\.html(?:[?#]|$)/i.test(href) ||
       /\bvraag\s+(?:een\s+)?offerte\b/i.test(text) ||
       /\bofferte\b/i.test(subject || '');
 
@@ -159,6 +161,9 @@
     if (isQuote) {
       eventName = 'quote_click';
       safeText = 'Vraag offerte';
+    } else if (isWhatsApp) {
+      eventName = 'whatsapp_click';
+      safeText = 'WhatsApp';
     } else if (isPhone) {
       eventName = 'phone_click';
       safeText = 'Bellen';
@@ -337,11 +342,93 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const cta = document.createElement('a');
-  cta.href = 'mailto:colortimevdm@gmail.com?subject=Offerte';
+  cta.href = 'offerte.html';
   cta.className = 'floating-cta';
   cta.textContent = 'Vraag offerte';
   document.body.appendChild(cta);
+  initMobileContactBar();
+  initQuoteForm();
 });
+
+function initMobileContactBar() {
+  if (document.querySelector('.mobile-contact-bar')) return;
+  const bar = document.createElement('nav');
+  bar.className = 'mobile-contact-bar';
+  bar.setAttribute('aria-label', 'Snel contact');
+  bar.innerHTML = `
+    <a href="tel:+32486667706">Bellen</a>
+    <a href="https://wa.me/32486667706?text=Hallo%2C%20ik%20zou%20graag%20informatie%20ontvangen%20over%20schilderwerken." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <a href="offerte.html" data-analytics-event="quote_click">Offerte</a>
+  `;
+  document.body.appendChild(bar);
+  document.body.classList.add('has-mobile-contact-bar');
+}
+
+function initQuoteForm() {
+  const form = document.getElementById('quote-form');
+  if (!form) return;
+  const status = document.getElementById('quote-form-status');
+  const button = form.querySelector('button[type="submit"]');
+  const buttonText = button.textContent;
+  let sending = false;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (sending || !form.reportValidity()) return;
+    const payload = Object.fromEntries(new FormData(form));
+    const workType = payload.work_type;
+    sending = true;
+    button.disabled = true;
+    button.textContent = 'Aanvraag verzenden…';
+    form.setAttribute('aria-busy', 'true');
+    status.dataset.state = 'sending';
+    status.textContent = 'Uw aanvraag wordt verzonden. Even geduld.';
+    let succeeded = false;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      const result = await response.json();
+      if (!response.ok || result.success !== true) throw new Error('Submission rejected');
+      succeeded = true;
+    } catch (_) {
+      status.dataset.state = 'error';
+      status.textContent = 'We konden de verzending niet bevestigen. Uw gegevens blijven ingevuld. Controleer uw verbinding en probeer opnieuw, of neem contact op via WhatsApp, e-mail of telefoon.';
+    } finally {
+      clearTimeout(timeout);
+      sending = false;
+      button.disabled = false;
+      button.textContent = buttonText;
+      form.removeAttribute('aria-busy');
+    }
+    if (succeeded) {
+      status.dataset.state = 'success';
+      status.textContent = 'Bedankt! Uw offerteaanvraag is succesvol verstuurd. Colortime neemt persoonlijk contact met u op.';
+      form.reset();
+      // Only confirmed submissions count; never include user-entered text in GA4.
+      try {
+        if (localStorage.getItem('colortime.analytics-consent.v1') === 'accepted' &&
+            typeof window.gtag === 'function' &&
+            window['ga-disable-G-88DDP4S0WZ'] === false &&
+            document.getElementById('colortime-ga4')) {
+          const parameters = { page_path: location.pathname };
+          const allowedTypes = ['Binnenschilderwerken', 'Buitenschilderwerken', 'Behangwerken', 'Houtwerk', 'Andere'];
+          if (allowedTypes.includes(workType)) parameters.type_werk = workType;
+          window.gtag('event', 'quote_submit', parameters);
+        }
+      } catch (_) {
+        // A tracking/storage failure must not change a successful submission.
+      }
+    }
+    status.focus();
+  });
+  // Keep the existing no-JS safeguard; errors are shown on this page with JS.
+  form.querySelector('fieldset').disabled = false;
+}
 
 // lightbox functionality (used on homepage and works pages)
 (function () {

@@ -2337,3 +2337,113 @@ section {
   .cookie-banner__actions { flex-wrap: wrap; }
   .cookie-banner__actions button { flex: 1; }
 }
+
+/* Quote page and shared mobile contact actions. */
+.cookie-banner { animation: none; transform: none; }
+.quote-page { margin-top: 0; padding-top: 150px; }
+.quote-benefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  margin: 2rem 0;
+}
+.quote-benefits li {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  background: #fff;
+  border-left: 3px solid var(--color-accent);
+  box-shadow: 0 4px 14px rgba(42, 42, 42, 0.06);
+}
+.quote-form-section {
+  padding: 1.5rem;
+  border: 1px solid #e4d8cf;
+  border-radius: 16px;
+  background: #fff;
+}
+.quote-page .quote-notice {
+  padding: 1rem;
+  border-radius: 8px;
+  background: #fff3e8;
+  text-align: left;
+}
+.quote-form fieldset { border: 0; min-width: 0; }
+.quote-form legend { font-weight: 600; margin-bottom: 0.5rem; }
+.quote-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.quote-form label { display: block; font-weight: 600; text-align: left; }
+.quote-form input,
+.quote-form select,
+.quote-form textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin-top: 0.4rem;
+  padding: 0.7rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--color-text);
+  font: inherit;
+}
+.quote-form textarea { resize: vertical; }
+.quote-form input:focus-visible,
+.quote-form select:focus-visible,
+.quote-form textarea:focus-visible,
+.quote-form button:focus-visible,
+.mobile-contact-bar a:focus-visible { outline: 3px solid var(--color-primary-dark); outline-offset: 3px; }
+.quote-full-width { grid-column: 1 / -1; }
+.quote-page .quote-field-help { text-align: left; font-size: 0.9rem; margin: 0.75rem 0 1.25rem; }
+.quote-form .btn-cta { border: 0; font: inherit; font-weight: 600; cursor: pointer; }
+#quote-form-status:empty { display: none; }
+.quote-page #quote-form-status { margin: 1rem 0 0; text-align: left; font-weight: 600; }
+.quote-contact, .quote-next-steps { margin-top: 2.5rem; }
+.quote-contact h2, .quote-next-steps h2 { margin-bottom: 1.5rem; }
+.quote-next-steps ol { padding-left: 1.5rem; text-align: left; }
+.quote-next-steps li { padding: 0.4rem 0; }
+.mobile-contact-bar { display: none; }
+@media (max-width: 768px) {
+  .has-mobile-contact-bar { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  html { scroll-padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-contact-bar {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 900;
+    height: calc(60px + env(safe-area-inset-bottom, 0px));
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    background: #fff;
+    border-top: 1px solid #e4d8cf;
+    box-shadow: 0 -4px 18px rgba(42, 42, 42, 0.1);
+  }
+  .mobile-contact-bar a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 44px;
+    border-radius: 8px;
+    color: var(--color-primary-dark);
+    font-weight: 600;
+  }
+  .mobile-contact-bar a:last-child { background: var(--color-primary-dark); color: #fff; }
+  .has-mobile-contact-bar .floating-cta { display: none; }
+  .has-mobile-contact-bar .cookie-banner {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    max-height: calc(100dvh - 88px - env(safe-area-inset-bottom, 0px));
+  }
+  .quote-page { padding-top: 110px; }
+}
+@media (max-width: 600px) {
+  .quote-benefits, .quote-form-grid { grid-template-columns: 1fr; }
+  .quote-form-section { padding: 1rem; }
+  .quote-form .btn-cta { width: 100%; }
+}
+
+/* Web3Forms submission feedback. */
+.quote-form .quote-honeypot { display: none; }
+.quote-page .quote-photo-cta { margin: 0.5rem 0 1rem; text-align: left; }
+.quote-form button:disabled { cursor: wait; opacity: 0.65; }
+#quote-form-status[data-state] { padding: 1rem; border-radius: 8px; }
+#quote-form-status[data-state="sending"] { background: #f5f5f5; }
+#quote-form-status[data-state="success"] { background: #edf8ee; border-left: 3px solid #26733b; }
+#quote-form-status[data-state="error"] { background: #fff3e8; border-left: 3px solid var(--color-primary-dark); }
