@@ -127,6 +127,55 @@
   }
 })();
 
+// One delegated listener also covers the floating CTA and future shared partials.
+(function () {
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    const link = target?.closest('a, button');
+    if (!link) return;
+
+    // Read the existing consent state without modifying its lifecycle.
+    try {
+      if (localStorage.getItem('colortime.analytics-consent.v1') !== 'accepted') return;
+    } catch (_) {
+      return;
+    }
+    if (typeof window.gtag !== 'function' ||
+        window['ga-disable-G-88DDP4S0WZ'] !== false ||
+        !document.getElementById('colortime-ga4')) return;
+
+    const href = (link.getAttribute('href') || '').trim();
+    const isPhone = /^tel:/i.test(href);
+    const isEmail = /^mailto:/i.test(href);
+    const text = (link.textContent || '').replace(/\s+/g, ' ').trim();
+    const subject = isEmail ? new URLSearchParams(href.split('?')[1] || '').get('subject') : null;
+    const isQuote = link.dataset.analyticsEvent === 'quote_click' ||
+      /\bvraag\s+(?:een\s+)?offerte\b/i.test(text) ||
+      /\bofferte\b/i.test(subject || '');
+
+    let eventName;
+    // Use fixed labels: visible contact text can contain a phone number or email.
+    let safeText;
+    if (isQuote) {
+      eventName = 'quote_click';
+      safeText = 'Vraag offerte';
+    } else if (isPhone) {
+      eventName = 'phone_click';
+      safeText = 'Bellen';
+    } else if (isEmail) {
+      eventName = 'email_click';
+      safeText = 'E-mail';
+    } else {
+      return;
+    }
+
+    const parameters = { link_text: safeText, page_path: location.pathname };
+    if (isPhone) parameters.link_url = 'tel:';
+    else if (isEmail) parameters.link_url = 'mailto:';
+    window.gtag('event', eventName, parameters);
+  });
+})();
+
 function markActiveLink() {
   const current = document.body.dataset.page;
   if (!current) return;
