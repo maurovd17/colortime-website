@@ -1,5 +1,132 @@
 // main.js - shared scripts for the Colortime site
 
+// Basic consent mode: no Google script or request until analytics is accepted.
+(function () {
+  const measurementId = 'G-88DDP4S0WZ';
+  const consentKey = 'colortime.analytics-consent.v1';
+  let analyticsStarted = false;
+
+  function readConsent() {
+    try {
+      return localStorage.getItem(consentKey);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function loadAnalytics() {
+    if (analyticsStarted || document.getElementById('colortime-ga4')) return;
+    analyticsStarted = true;
+    window['ga-disable-' + measurementId] = false;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+    window.gtag('js', new Date());
+    window.gtag('config', measurementId, {
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
+    const script = document.createElement('script');
+    script.id = 'colortime-ga4';
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+    document.head.appendChild(script);
+  }
+
+  function stopAnalytics() {
+    window['ga-disable-' + measurementId] = true;
+    // Remove GA cookies at host and parent-domain scope when consent is withdrawn.
+    const domains = location.hostname.split('.');
+    document.cookie.split(';').forEach((cookie) => {
+      const name = cookie.split('=')[0].trim();
+      if (name !== '_ga' && !name.startsWith('_ga_')) return;
+      const expired = name + '=; Max-Age=0; path=/';
+      document.cookie = expired;
+      for (let i = 0; i < domains.length - 1; i++) {
+        document.cookie = expired + '; domain=' + domains.slice(i).join('.');
+      }
+    });
+  }
+
+  function initCookieConsent() {
+    if (document.getElementById('cookie-banner')) return;
+    const banner = document.createElement('section');
+    banner.id = 'cookie-banner';
+    banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'region');
+    banner.setAttribute('aria-labelledby', 'cookie-banner-title');
+    banner.innerHTML = `
+      <div class="cookie-banner__text">
+        <h2 id="cookie-banner-title">Uw cookievoorkeuren</h2>
+        <p>Met uw toestemming gebruiken we Google Analytics om het gebruik van onze website te meten. Hiervoor worden analytische cookies geplaatst en gegevens met Google gedeeld. U kunt weigeren en de website gewoon gebruiken. Uw keuze wordt op dit apparaat bewaard en kan via Cookievoorkeuren worden gewijzigd.</p>
+      </div>
+      <div class="cookie-banner__actions">
+        <button type="button" data-consent="denied">Weigeren</button>
+        <button type="button" data-consent="accepted">Accepteren</button>
+      </div>
+    `;
+    const preferences = document.createElement('button');
+    preferences.type = 'button';
+    preferences.className = 'cookie-preferences';
+    preferences.textContent = 'Cookievoorkeuren';
+    preferences.setAttribute('aria-controls', 'cookie-banner');
+    preferences.addEventListener('click', () => {
+      banner.hidden = false;
+      banner.querySelector('button').focus();
+    });
+    (document.querySelector('.site-footer') || document.body).appendChild(preferences);
+    document.body.appendChild(banner);
+
+    banner.querySelectorAll('[data-consent]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const consent = button.dataset.consent;
+        try {
+          localStorage.setItem(consentKey, consent);
+        } catch (_) {
+          // Storage can be unavailable; the choice still applies to this page.
+        }
+        banner.hidden = true;
+        preferences.focus({ preventScroll: true });
+        if (consent === 'accepted') {
+          loadAnalytics();
+        } else {
+          stopAnalytics();
+          // Unload an already running Google script without sending denied pings.
+          if (analyticsStarted) location.reload();
+        }
+      });
+    });
+
+    const savedConsent = readConsent();
+    banner.hidden = savedConsent === 'accepted' || savedConsent === 'denied';
+    if (savedConsent === 'accepted') loadAnalytics();
+    else stopAnalytics();
+
+    window.addEventListener('storage', (event) => {
+      if (event.key !== consentKey && event.key !== null) return;
+      if (readConsent() === 'accepted') {
+        banner.hidden = true;
+        loadAnalytics();
+      } else {
+        stopAnalytics();
+        if (analyticsStarted) location.reload();
+        else banner.hidden = readConsent() === 'denied';
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCookieConsent, { once: true });
+  } else {
+    initCookieConsent();
+  }
+})();
+
 function markActiveLink() {
   const current = document.body.dataset.page;
   if (!current) return;
